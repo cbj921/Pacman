@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: blueGhost
+  m_Controller: {fileID: 9100000, guid: 79bcf06fbd151fc48aa795f99b5c9ab6, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: a7ca8dc373821b54183ef0aadbac7ce2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7ea3c2a418d1f314b9c580cc056a1d8d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d1f939ac45c8fa94487c96ba54dafb92, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d4b8e89dc9c3f584c98de803419d16bc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 78c825fde5e4d0b498b598809260aa37, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3e9bfeac805461b4a938191cb79e8392, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 256a4c55785a2bb43853a98e8089d287, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 720be281515568846a91889324cd204f, type: 2}
