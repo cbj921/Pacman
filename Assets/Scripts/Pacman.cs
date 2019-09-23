@@ -54,7 +54,7 @@ public class Pacman : MonoBehaviour
         Vector2 pos = (Vector2)transform.position;
         // 射线检测，看看目标点到当前位置是否是pacman，如果不是就是墙的碰撞体
         RaycastHit2D hit = Physics2D.Linecast(pos + 1.1f*dir, pos);
-        bool canArrive = (hit.collider == GetComponent<Collider2D>());
+        bool canArrive = ((hit.collider.gameObject.tag == "Player") || (hit.collider.gameObject.tag == "Enemy"));
         //Debug.Log(canArrive);
         //Debug.Log(hit.collider);
         return canArrive;
