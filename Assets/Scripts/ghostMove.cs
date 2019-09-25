@@ -52,13 +52,16 @@ public class ghostMove : MonoBehaviour
         {
             if(GameControl.Instance.isSuperPacman)
             {
-                //TODO: 将幽灵的位置回到原点，重新巡逻
+                //将幽灵的位置回到原点，重新巡逻
                 transform.position = startPos;
                 GetRandomWay();
+                // 并且加分
+                GameControl.Instance.score += 100;
             }
             else
             {
-                Destroy(other.gameObject);
+                other.gameObject.SetActive(false);
+                GameControl.Instance.GameOver();
             }
             
         }

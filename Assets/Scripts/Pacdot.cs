@@ -19,7 +19,7 @@ public class Pacdot : MonoBehaviour {
 				// 吃掉普通豆子
 				GameControl.Instance.OnEatPacDot(gameObject);
 			}
-			gameObject.SetActive(false);
+			Destroy(gameObject);
 		}
 	}
 }

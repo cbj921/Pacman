@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameControl : MonoBehaviour
 {
 
@@ -28,9 +29,17 @@ public class GameControl : MonoBehaviour
     public GameObject gameOver;
     public GameObject win;
     public GameObject countStart;
+    public GameObject restartButton;
+    public Text pacDotText;
+    public Text nowEatText;
+    public Text scoreText;
     // 音乐
     public AudioClip startClip;
     public AudioClip BGM;
+
+    private int pacDotNum = 0;
+    private int nowEat = 0;
+    public int score = 0;
 
     private void Awake()
     {
@@ -45,10 +54,26 @@ public class GameControl : MonoBehaviour
         // 初始的时候先暂停游戏
         SetState(false);
 
+        // 获取初始豆子数
+        pacDotNum = GameObject.Find("Maze").transform.childCount;
     }
 
-    private void Start()
+    private void Update()
     {
+        // 更新UI数据
+        UpdateUI();
+        // 判断胜利条件
+        JudgeWin();
+    }
+
+    public void UpdateUI()
+    {
+        if (gamePanel.activeInHierarchy)
+        {
+            pacDotText.text = "Remain:\n\n" + (pacDotNum - nowEat);
+            nowEatText.text = "Eaten:\n\n" + nowEat;
+            scoreText.text = "Score:\n\n" + score;
+        }
     }
 
     private void CreatSuperDot()
@@ -57,17 +82,21 @@ public class GameControl : MonoBehaviour
         GameObject superDot = pacDotList[tempIndex];
         superDot.transform.localScale = new Vector3(3, 3, 3);
         superDot.GetComponent<Pacdot>().isSuperDot = true;
+        score += 50;
     }
 
     public void OnEatPacDot(GameObject pacDot)
     {
         pacDotList.Remove(pacDot);
+        // 吃掉豆子后
+        nowEat++;
+        score += 10;
     }
 
     public void OnEatSuperDot(GameObject pacDot)
     {
         // 当豆子小于10个的时候就不再生成超级豆子
-        if (pacDotList.Count < 10)
+        if (pacDotList.Count < 20)
         {
             return;
         }
@@ -125,7 +154,7 @@ public class GameControl : MonoBehaviour
     {
         countStart.SetActive(true);
         startPanel.SetActive(false);
-        AudioSource.PlayClipAtPoint(startClip,transform.position);
+        AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
     }
     public void OnClickExit()
     {
@@ -139,9 +168,40 @@ public class GameControl : MonoBehaviour
         countStart.SetActive(false);
         SetState(true);
         // 播放BGM
-        AudioSource.PlayClipAtPoint(BGM,transform.position);
+        GetComponent<AudioSource>().Play();
         // 开局5秒生成超级豆子
         Invoke("CreatSuperDot", 5.0f);
 
     }
+    // 游戏结束时调用
+    public void GameOver()
+    {
+        // 让gameover显示
+        gameOver.SetActive(true);
+        restartButton.SetActive(true);
+        //SetState(false);
+    }
+
+    // 游戏胜利时调用
+    public void GameWin()
+    {
+        win.SetActive(true);
+        restartButton.SetActive(true);
+        SetState(false);
+    }
+
+    // 判断是否胜利 
+    public void JudgeWin()
+    {
+        if (nowEat == pacDotNum && pacMan.GetComponent<Pacman>().enabled != false)
+        {
+            GameWin();
+        }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 }
